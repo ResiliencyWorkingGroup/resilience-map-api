@@ -14,13 +14,9 @@ const app = express();
 
 app.use(cors());
 
-const index = require('./app/routes/index');
-const markers = require('./app/routes/markers');
-const regions = require('./app/routes/regions');
+const routes = require('./app/routes');
 
-app.use('/', index);
-app.use('/markers', markers);
-app.use('/regions', regions);
+app.use('/', routes);
 
 app.use((req, res) => {
   res.sendStatus(404);
