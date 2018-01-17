@@ -10,6 +10,8 @@ exports.internal = {
 };
 
 exports.external = {
+  // SF Open data
+  communityResiliencyIndicators: 'https://data.sfgov.org/resource/wsj2-27m9.json',
   // SF Open Data Markers
   privatelyOwnedPublicOpenSpaces: 'https://data.sfgov.org/resource/3ub7-d4yy.geojson',
   parksAndOpenSpaces: 'https://data.sfgov.org/resource/94uf-amnx.geojson',
