@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Marker = require('./app/models/marker');
 const cors = require('cors');
 require('dotenv').config();
 

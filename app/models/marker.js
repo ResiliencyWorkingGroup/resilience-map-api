@@ -1,18 +1,25 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
-
-const marker = new Schema(
-  {
-    coordinates: { type: [Number] },
-    asset: { type: String },
-    author: { type: String },
-    description: { type: String },
-    title: { type: String }
+const markerSchema = mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
   },
-  {
-    timestamps: true
-  }
-);
+  asset: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true,
+  },
+}, {timestamps: true});
 
-module.exports = mongoose.model('Marker', marker);
+module.exports = mongoose.model('Marker', markerSchema);
