@@ -15,6 +15,7 @@
   "author": "Kurtis Houser",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "concurrently": "^3.5.1",
     "cors": "^2.8.4",
     "express": "^4.16.2",

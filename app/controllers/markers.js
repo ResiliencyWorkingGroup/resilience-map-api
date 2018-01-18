@@ -97,4 +97,32 @@ function markerById(req, res) {
   });
 }
 
-module.exports = { markerGroups, markersByGroup, markerById };
+function addMarkerToGroup(req, res) {
+  const markerGroup = humps.camelize(req.params.markerGroup);
+
+  if (internal[markerGroup]) {
+    const { title, description, author, coordinates } = req.body;
+    const marker = new Marker({
+      title,
+      description,
+      author,
+      coordinates,
+      asset: internal[markerGroup],
+    });
+    marker.save((err, marker) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      return res.status(201).send('Marker added');
+    })
+  } else {
+    res.status(405).send(`This marker group is read only`);
+  }
+}
+
+module.exports = {
+  markerGroups,
+  markersByGroup,
+  markerById,
+  addMarkerToGroup,
+};

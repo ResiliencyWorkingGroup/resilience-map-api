@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
@@ -7,12 +8,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING,
-  { useMongoClient: true },
+  { useMongoClient: true }
 );
 mongoose.Promise = global.Promise;
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use(cors());
 
 const routes = require('./app/routes');
