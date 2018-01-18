@@ -47,6 +47,10 @@ function markerGroups(req, res) {
       url: 'http://localhost:5000/markers/parks-and-open-spaces',
     },
     {
+      name: 'Schools',
+      url: 'http://localhost:5000/markers/schools',
+    },
+    {
       name: 'Businesses',
       url: 'http://localhost:5000/markers/businesses',
     },
@@ -55,8 +59,8 @@ function markerGroups(req, res) {
         url: 'http://localhost:5000/markers/city-facilities',
     },
     {
-      name: 'Healthcare Facilities',
-      url: 'http://localhost:5000/markers/healthcare-facilities'},
+      name: 'Health Care Facilities',
+      url: 'http://localhost:5000/markers/health-care-facilities'},
     {
       name: 'Pit Stops',
       url: 'http://localhost:5000/markers/pit-stops'},
