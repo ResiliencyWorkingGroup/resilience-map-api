@@ -4,6 +4,7 @@ const {
   getMapDataset,
   getMapEntity,
   addMapEntity,
+  deleteMapEntity,
 } = require('../controllers/mapDatasets');
 
 router.route('/')
@@ -15,6 +16,7 @@ router.route('/:mapDataset')
 
 // current implementation for internal data only
 router.route('/:mapDataset/:id')
-  .get(getMapEntity);
+  .get(getMapEntity)
+  .delete(deleteMapEntity);
 
 module.exports = router;

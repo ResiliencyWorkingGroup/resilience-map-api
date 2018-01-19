@@ -30,7 +30,7 @@ function getMapDataset(req, res) {
   }
 }
 
-// current implmentation for internal data only
+// current implementation for internal data only
 function getMapEntity(req, res) {
   const { mapDataset, id } = req.params;
 
@@ -66,9 +66,19 @@ function addMapEntity(req, res) {
   }
 }
 
+// current implementation for internal data only
+function deleteMapEntity(req, res) {
+  const { id } = req.params;
+  Marker.findByIdAndRemove(id).exec()
+    .then(result => res.send('Map item removed'))
+    .catch(err => console.log(err));
+  // res.send(`delete entity with id ${id}`);
+}
+
 module.exports = {
   getMapDatasets,
   getMapDataset,
   getMapEntity,
   addMapEntity,
+  deleteMapEntity,
  };
