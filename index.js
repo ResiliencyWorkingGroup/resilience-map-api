@@ -7,9 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-mongoose.connect(process.env.MONGO_CONNECTION_STRING,
-  { useMongoClient: true }
-);
+mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 mongoose.Promise = global.Promise;
 
 const app = express();
