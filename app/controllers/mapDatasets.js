@@ -32,15 +32,11 @@ function getMapDataset(req, res) {
 
 // current implementation for internal data only
 function getMapEntity(req, res) {
-  const { mapDataset, id } = req.params;
+  const { id } = req.params;
 
-  Marker.findById(id, (err, entity) => {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      res.send(entity);
-    }
-  });
+  Marker.findById(id).exec()
+    .then(mapEntity => res.json(mapEntity))
+    .catch(err => res.status(404).send('Map item not found'));
 }
 
 function addMapEntity(req, res) {
