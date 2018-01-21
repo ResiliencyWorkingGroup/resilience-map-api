@@ -44,6 +44,7 @@ function addMapEntity(req, res) {
 
   if (internal[mapDataset]) {
     const { title, description, author, coordinates } = req.body;
+
     const marker = new Marker({
       title,
       description,
@@ -51,12 +52,10 @@ function addMapEntity(req, res) {
       coordinates,
       asset: internal[mapDataset],
     });
-    marker.save((err, marker) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      return res.status(201).send('Map item added');
-    })
+
+    marker.save(marker)
+      .then(result => res.status(201).send('Map item added'))
+      .catch(err => res.status(500).send('Unable to add map item'));
   } else {
     res.status(405).send(`This map dataset is read only`);
   }
