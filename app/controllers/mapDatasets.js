@@ -67,8 +67,7 @@ function deleteMapEntity(req, res) {
   const { id } = req.params;
   Marker.findByIdAndRemove(id).exec()
     .then(result => res.send('Map item removed'))
-    .catch(err => console.log(err));
-  // res.send(`delete entity with id ${id}`);
+    .catch(err => res.status(500).send('Unable to delete map entity'));
 }
 
 module.exports = {
