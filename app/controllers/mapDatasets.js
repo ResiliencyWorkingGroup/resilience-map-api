@@ -14,13 +14,10 @@ function getMapDataset(req, res) {
 
   if (internal[mapDataset]) { // internal data
     const query = { asset: internal[mapDataset] };
-    Marker.find(query).lean().exec((err, markers) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.json(geojson.parse(markers, {Point: 'coordinates'})); // convert to GeoJSON
-      }
-    });
+
+    Marker.find(query).lean().exec()
+      .then(dataset => res.json(geojson.parse(dataset, {Point: 'coordinates'})))
+      .catch(err => res.status(404).send('Map dataset no found'));
   } else if (external[mapDataset]) { // external data
     fetch(external[mapDataset])
       .then(response => response.json())
