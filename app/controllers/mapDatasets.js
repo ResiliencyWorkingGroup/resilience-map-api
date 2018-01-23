@@ -58,6 +58,26 @@ function addMapEntity(req, res) {
   }
 }
 
+function updateMapEntity(req, res) {
+  const mapDataset = humps.camelize(req.params.mapDataset);
+
+  if (internal[mapDataset]) {
+    const { id } = req.params;
+
+    if (req.body._id) {
+      delete req.body._id;
+    }
+
+    Marker.findByIdAndUpdate(id, req.body).exec()
+      .then(response => res.send('Map item updated'))
+      .catch(err => res.status(500).send('Unable to update map item'));
+    } else if (external[mapDataset]) {
+      res.status(405).send(`This map dataset is read only`);
+    } else {
+      res.status(404).send('Not Found');
+    }
+}
+
 // current implementation for internal data only
 function deleteMapEntity(req, res) {
   const { id } = req.params;
@@ -71,5 +91,6 @@ module.exports = {
   getMapDataset,
   getMapEntity,
   addMapEntity,
+  updateMapEntity,
   deleteMapEntity,
  };
