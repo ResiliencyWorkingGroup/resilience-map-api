@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const geojson = require('geojson');
 const Marker = require('../models/marker.js');
 const mapDatasets = require('../config/mapDatasets');
-const { internal, external } = require('../config/data-source');
+const { internal, external } = require('../config/dataSource');
 
 async function getAll() {
   const datasets = await mapDatasets; // simulated db call
