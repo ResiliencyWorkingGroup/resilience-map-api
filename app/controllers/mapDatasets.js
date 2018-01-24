@@ -1,89 +1,61 @@
 const fetch = require('node-fetch');
 const humps = require('humps');
-const geojson = require('geojson');
-const Marker = require('../models/marker.js');
-const mapDatasets = require('../config/mapDatasets');
-const { internal, external } = require('./data-source');
+const {
+  getAll,
+  getById,
+  getEntity,
+  createEntity,
+  updateEntity,
+  deleteEntity,
+} = require('../repositories');
 
 function getMapDatasets(req, res) {
-  res.json(mapDatasets);
+  getAll()
+    .then((datasets) => res.json(datasets));
 }
 
 function getMapDataset(req, res) {
   const mapDataset = humps.camelize(req.params.mapDataset);
 
-  if (internal[mapDataset]) { // internal data
-    const query = { asset: internal[mapDataset] };
-
-    Marker.find(query).lean().exec()
-      .then(dataset => res.json(geojson.parse(dataset, {Point: 'coordinates'})))
-      .catch(err => res.status(404).send('Map dataset no found'));
-  } else if (external[mapDataset]) { // external data
-    fetch(external[mapDataset])
-      .then(response => response.json())
-      .then(json => res.send(json));
-  } else {
-    res.status(404).send('Not Found');
-  }
+  getById(mapDataset)
+    .then((dataset) => res.json(dataset))
+    .catch((error) => res.status(404).send('Map dataset not found'));
 }
 
-// current implementation for internal data only
 function getMapEntity(req, res) {
-  const { id } = req.params;
+  const { mapDataset, id } = req.params;
 
-  Marker.findById(id).exec()
-    .then(mapEntity => res.json(mapEntity))
-    .catch(err => res.status(404).send('Map item not found'));
+  getEntity(mapDataset, id)
+    .then((entity) => res.json(entity))
+    .catch((error) => res.status(404).send('Map item not found'));
 }
 
 function addMapEntity(req, res) {
   const mapDataset = humps.camelize(req.params.mapDataset);
+  const entity = req.body;
 
-  if (internal[mapDataset]) {
-    const { title, description, author, coordinates } = req.body;
-
-    const marker = new Marker({
-      title,
-      description,
-      author,
-      coordinates,
-      asset: internal[mapDataset],
-    });
-
-    marker.save(marker)
-      .then(result => res.status(201).send('Map item added'))
-      .catch(err => res.status(500).send('Unable to add map item'));
-  } else {
-    res.status(405).send(`This map dataset is read only`);
-  }
+  createEntity(mapDataset, entity)
+    .then((newEntity) => res.send('Map item added'))
+    .catch((error) => res.status(500).send('Unable to add map item'));
 }
 
 function updateMapEntity(req, res) {
   const mapDataset = humps.camelize(req.params.mapDataset);
+  const { id } = req.params;
+  const entity = req.body;
 
-  if (internal[mapDataset]) {
-    const { id } = req.params;
-
-    if (req.body._id) {
-      delete req.body._id;
-    }
-
-    Marker.findByIdAndUpdate(id, req.body).exec()
-      .then(response => res.send('Map item updated'))
-      .catch(err => res.status(500).send('Unable to update map item'));
-    } else if (external[mapDataset]) {
-      res.status(405).send(`This map dataset is read only`);
-    } else {
-      res.status(404).send('Not Found');
-    }
+  updateEntity(mapDataset, id, entity)
+    .then((updatedEntity) => res.send('Map item updated'))
+    .catch((error) => res.status(500).send('Unable to add map item'));
 }
 
-// current implementation for internal data only
 function deleteMapEntity(req, res) {
+  const mapDataset = humps.camelize(req.params.mapDataset);
   const { id } = req.params;
-  Marker.findByIdAndRemove(id).exec()
-    .then(result => res.send('Map item removed'))
-    .catch(err => res.status(500).send('Unable to delete map entity'));
+
+  deleteEntity(mapDataset, id)
+    .then((deletedEntity) => res.send('Map item deleted'))
+    .catch((error) => res.status(500).send('Unable to delete map item'));
 }
 
 module.exports = {
