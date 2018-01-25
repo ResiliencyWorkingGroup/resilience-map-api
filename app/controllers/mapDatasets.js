@@ -11,7 +11,8 @@ const {
 
 function getMapDatasets(req, res) {
   getAll()
-    .then((datasets) => res.json(datasets));
+    .then((datasets) => res.json(datasets))
+    .catch((error) => res.send('Map datasets not found'));
 }
 
 function getMapDataset(req, res) {
