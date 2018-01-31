@@ -24,7 +24,8 @@ function getMapDataset(req, res) {
 }
 
 function getMapEntity(req, res) {
-  const { mapDataset, id } = req.params;
+  const mapDataset = humps.camelize(req.params.mapDataset);
+  const { id } = req.params;
 
   getEntity(mapDataset, id)
     .then((entity) => res.json(entity))
