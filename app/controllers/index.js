@@ -1,6 +1,6 @@
 function index(req, res) {
   res.send({
-    mapDatasetsUrl: 'http://localhost:5000/map-datasets',
+    mapDatasetsUrl: `${process.env.SERVER_URL}/map-datasets`,
   });
 }
 
