@@ -3,11 +3,13 @@ const humps = require('humps');
 const {
   getAll,
   getById,
+  fetchById,
   getEntity,
   createEntity,
   updateEntity,
   deleteEntity,
 } = require('../repositories');
+const { internal, external } = require('../config/dataSource');
 
 function getMapDatasets(req, res) {
   getAll()
@@ -18,9 +20,17 @@ function getMapDatasets(req, res) {
 function getMapDataset(req, res) {
   const mapDataset = humps.camelize(req.params.mapDataset);
 
-  getById(mapDataset)
-    .then((dataset) => res.json(dataset))
-    .catch((error) => res.status(404).send('Map dataset not found'));
+  if (internal[mapDataset]) {
+    getById(mapDataset)
+      .then((dataset) => res.json(dataset))
+      .catch((error) => res.status(404).send('Map dataset not found'));
+  } else if (external[mapDataset]) {
+    fetchById(mapDataset)
+      .then((dataset) => res.json(dataset))
+      .catch((error) => res.status(404).send('Map dataset not found'));
+  } else {
+    res.status(404).send('Map dataset not found');
+  }
 }
 
 function getMapEntity(req, res) {

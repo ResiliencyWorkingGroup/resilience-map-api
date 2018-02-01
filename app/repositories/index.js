@@ -11,31 +11,30 @@ async function getAll() {
 }
 
 async function getById(mapDataset) {
-
   try {
-    if (internal[mapDataset]) { // internal data
-      const query = { asset: internal[mapDataset] };
+    const query = { asset: internal[mapDataset] };
 
-      const response = await Marker.find(query).lean().exec();
-      dataset = geojson.parse(response, {Point: 'coordinates'});
+    const response = await Marker.find(query).lean().exec();
+    const dataset = geojson.parse(response, {Point: 'coordinates'});
 
-      return dataset;
-    } else if (external[mapDataset]) { // external data
-      const response = await fetch(external[mapDataset]);
-      dataset = await response.json();
-
-      return dataset;
-    } else {
-      throw new Error; // invalid dataset;
-    }
+    return dataset;
   } catch (error) {
     throw new Error(error);
   }
+}
 
+async function fetchById(mapDataset) {
+  try {
+    const response = await fetch(external[mapDataset]);
+    const dataset = await response.json();
+
+    return dataset;
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 async function getEntity(mapDataset, id) {
-
   if (internal[mapDataset]) {
     try {
       const response = await Marker.findById(id).exec();
@@ -110,6 +109,7 @@ async function deleteEntity(mapDataset, id) {
 module.exports = {
   getAll,
   getById,
+  fetchById,
   getEntity,
   createEntity,
   updateEntity,
