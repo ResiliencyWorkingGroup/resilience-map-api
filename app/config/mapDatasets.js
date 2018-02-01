@@ -51,7 +51,7 @@ const mapDatasets = [
     name: 'Privately Owned Public Open Spaces',
     url: `${process.env.SERVER_URL}/map-datasets/privately-owned-public-open-spaces`,
     type: 'marker',
-    readOnly: false,
+    readOnly: true,
     datasetSource: 'DataSF',
     datasetSourceUrl: 'https://data.sfgov.org/Culture-and-Recreation/Privately-Owned-Public-Open-Spaces/65ik-7wqd',
   }, {
