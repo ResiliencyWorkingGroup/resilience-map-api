@@ -35,74 +35,58 @@ async function fetchById(mapDataset) {
 }
 
 async function getEntity(mapDataset, id) {
-  if (internal[mapDataset]) {
-    try {
-      const response = await Marker.findById(id).exec();
+  try {
+    const response = await Marker.findById(id).exec();
 
-      return response;
-    } catch (error) {
-      throw new Error(error);
-    }
-  } throw new Error(); // can't get individual item from an external dataset
+    return response;
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 async function createEntity(mapDataset, entity) {
-  // add check to make sure entity(lat, lng) doesn't exist
+  const { title, description, author, coordinates } = entity;
 
-  if (internal[mapDataset]) {
-    const { title, description, author, coordinates } = entity;
+  const marker = new Marker({
+    title,
+    description,
+    author,
+    coordinates,
+    asset: internal[mapDataset],
+  });
 
-    const marker = new Marker({
-      title,
-      description,
-      author,
-      coordinates,
-      asset: internal[mapDataset],
-    });
+  try {
+    const newEntity = await marker.save(marker);
 
-    try {
-      const newEntity = await marker.save(marker);
-
-      return newEntity;
-    } catch (error) {
-      throw new Error(error);
-    }
-  } else {
-    throw new Error(); // can't add an item to a external dataset
+    return newEntity;
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
 async function updateEntity(mapDataset, id, entity) {
-  if (internal[mapDataset]) {
-    const options = {new: true}; // return updated document
+  const options = {new: true}; // return updated document
 
-    if (entity._id) {
-      delete entity._id;
-    }
+  if (entity._id) {
+    delete entity._id;
+  }
 
-    try {
-      const updatedEntity = await Marker.findByIdAndUpdate(id, entity, options).exec();
+  try {
+    const updatedEntity = await Marker.findByIdAndUpdate(id, entity, options).exec();
 
-      return updatedEntity; // hmm, null returned if id not found
-    } catch (error) {
-      throw new Error(error);
-    }
-  } else {
-    throw new Error; // can't update item in external dataset
+    return updatedEntity; // hmm, null returned if id not found
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
 async function deleteEntity(mapDataset, id) {
-  if (internal[mapDataset]) {
-    try {
-      const deletedEntity = await Marker.findByIdAndRemove(id).exec();
+  try {
+    const deletedEntity = await Marker.findByIdAndRemove(id).exec();
 
-      return deletedEntity;
-    } catch (error) {
-      throw new Error(error);
-    }
-  } else {
-    throw Error(); // can't delete item from external dataset
+    return deletedEntity;
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
