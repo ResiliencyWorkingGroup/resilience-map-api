@@ -1,18 +1,14 @@
 {
-  "name": "rezmap",
+  "name": "resilience-map-api",
   "version": "1.0.0",
-  "description": "React + Express API app scaffolding for Resiliency Map V2",
+  "description": "Express API app scaffolding for Resiliency Map V2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "npm install && npm install --prefix client",
-    "start": "node index.js",
-    "server": "nodemon index.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "start": "node index.js"
   },
   "keywords": [],
-  "author": "Kurtis Houser",
+  "author": "Resiliency Working Group",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
