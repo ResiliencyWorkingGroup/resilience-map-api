@@ -11,17 +11,16 @@
   "author": "Resiliency Working Group",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "concurrently": "^3.5.1",
-    "cors": "^2.8.4",
-    "express": "^4.16.2",
-    "geojson": "^0.5.0",
-    "humps": "^2.0.1",
-    "mongoose": "^5.0.1",
-    "node-fetch": "^1.7.3"
+    "body-parser": "1.18.2",
+    "cors": "2.8.4",
+    "express": "4.16.2",
+    "geojson": "0.5.0",
+    "humps": "2.0.1",
+    "mongoose": "5.0.4",
+    "node-fetch": "1.7.3"
   },
   "devDependencies": {
-    "dotenv": "^4.0.0",
-    "nodemon": "^1.14.11"
+    "dotenv": "4.0.0",
+    "nodemon": "1.14.12"
   }
 }
