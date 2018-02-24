@@ -22,6 +22,6 @@ exports.external = {
   healthCareFacilities: 'https://data.sfgov.org/resource/sci7-7q9i.geojson?$where=location IS NOT NULL',
   pitStops: 'https://data.sfgov.org/resource/snkr-6jdf.geojson?$where=geom IS NOT NULL',
   /* --- SF Open Data Regions --- */
-  seizmicHazardZones: 'https://data.sfgov.org/resource/t2cc-dy6b.geojson?$where=the_geom IS NOT NULL',
+  seismicHazardZones: 'https://data.sfgov.org/resource/t2cc-dy6b.geojson?$where=the_geom IS NOT NULL',
   neighborhoods: 'https://data.sfgov.org/resource/6ia5-2f8k.geojson?$where=the_geom IS NOT NULL',
 };
