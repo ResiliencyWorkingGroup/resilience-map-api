@@ -25,10 +25,12 @@ async function getById(mapDataset) {
 
 async function fetchById(mapDataset) {
   try {
-    const response = await fetch(external[mapDataset]);
+    const response = await fetch(external[mapDataset].url);
     const dataset = await response.json();
 
-    return dataset;
+    const modifiedDataset = external[mapDataset].modifyDataset(dataset);
+
+    return modifiedDataset;
   } catch (error) {
     throw new Error(error);
   }
