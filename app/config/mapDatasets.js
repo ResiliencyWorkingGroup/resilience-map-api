@@ -103,8 +103,8 @@ const mapDatasets = [
     readOnly: true,
     datasetSource: 'DataSF',
   }, {
-    name: 'Seizmic Hazard Zones',
-    url: `${process.env.SERVER_URL}/map-datasets/seizmic-hazard-zones`,
+    name: 'Seismic Hazard Zones',
+    url: `${process.env.SERVER_URL}/map-datasets/seismic-hazard-zones`,
     type: 'region',
     readOnly: true,
     datasetSource: 'DataSF',
