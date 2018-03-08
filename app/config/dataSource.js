@@ -1,12 +1,12 @@
 exports.internal = {
-    supplies: 'supplies',
-    staff: 'staff',
-    food: 'food',
-    water: 'water',
-    energyFuel: 'energy or fuel',
-    medical: 'medical',
-    openSpace: 'open space',
-    shelter: 'shelter',
+  supplies: 'supplies',
+  staff: 'staff',
+  food: 'food',
+  water: 'water',
+  energyFuel: 'energy or fuel',
+  medical: 'medical',
+  openSpace: 'open space',
+  shelter: 'shelter',
 };
 
 exports.external = {
@@ -63,7 +63,7 @@ exports.external = {
     author: "DataSF"
   },
   /* --- SF Open Data Regions --- */
-  seizmicHazardZones: {
+  seismicHazardZones: {
     url: "https://data.sfgov.org/resource/t2cc-dy6b.geojson",
     query: "$query=SELECT id AS _id, the_geom WHERE the_geom IS NOT NULL",
     author: "DataSF"
