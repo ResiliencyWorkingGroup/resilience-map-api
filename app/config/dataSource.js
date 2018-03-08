@@ -53,7 +53,7 @@ exports.external = {
   healthCareFacilities: {
     url: "https://data.sfgov.org/resource/sci7-7q9i.geojson",
     query:
-      "$query=SELECT uid AS _id, facility_name AS name, facility_type AS description WHERE location IS NOT NULL",
+      "$query=SELECT uid AS _id, facility_name AS name, facility_type, location AS description WHERE location IS NOT NULL",
     author: "DataSF"
   },
   pitStops: {
