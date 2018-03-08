@@ -3,6 +3,7 @@ const geojson = require('geojson');
 const Marker = require('../models/marker.js');
 const mapDatasets = require('../config/mapDatasets');
 const { internal, external } = require('../config/dataSource');
+const addAuthor = require("../utilities/addAuthor");
 
 async function getAll() {
   const datasets = await mapDatasets; // simulated db call
@@ -25,10 +26,10 @@ async function getById(mapDataset) {
 
 async function fetchById(mapDataset) {
   try {
-    const response = await fetch(external[mapDataset].url);
+    const response = await fetch(`${external[mapDataset].url}?${external[mapDataset].query}`);
     const dataset = await response.json();
 
-    const modifiedDataset = external[mapDataset].modifyDataset(dataset);
+    const modifiedDataset = addAuthor(dataset, external[mapDataset].author);
 
     return modifiedDataset;
   } catch (error) {
